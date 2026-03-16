@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>For Norah 💕</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+  <style>
+    :root {
+      --pink-lightest: #fff0f5;
+      --pink-light: #ffd6e7;
+      --pink-mid: #ffb3cc;
+      --pink-deep: #e8799a;
+      --pink-accent: #d4547a;
+      --white: #ffffff;
+      --text-dark: #5a2d42;
+      --text-mid: #8b4d65;
+      --shadow: rgba(212, 84, 122, 0.15);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--pink-lightest);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* ── Floating Hearts Background ── */
+    .hearts-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .heart-float {
+      position: absolute;
+      bottom: -60px;
+      font-size: 1.4rem;
+      animation: floatUp linear infinite;
+      opacity: 0;
+      user-select: none;
+    }
+    @keyframes floatUp {
+      0%   { transform: translateY(0) rotate(-10deg) scale(0.8); opacity: 0; }
+      10%  { opacity: 0.55; }
+      90%  { opacity: 0.3; }
+      100% { transform: translateY(-110vh) rotate(15deg) scale(1.1); opacity: 0; }
+    }
+
+    /* ── Main Layout ── */
+    .page {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px 60px;
+      gap: 36px;
+    }
+
+    /* ── Hero Header ── */
+    .hero {
+      text-align: center;
+      animation: fadeSlideDown 1s ease both;
+    }
+    @keyframes fadeSlideDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-subtitle {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(1rem, 3vw, 1.3rem);
+      color: var(--pink-deep);
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+    .hero-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(2.4rem, 8vw, 5rem);
+      color: var(--pink-accent);
+      line-height: 1.1;
+      text-shadow: 0 2px 18px rgba(212,84,122,0.18);
+    }
+    .hero-title span { color: var(--text-dark); }
+    .hero-pulse {
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      animation: heartPulse 1.2s ease-in-out infinite;
+      display: inline-block;
+    }
+    @keyframes heartPulse {
+      0%,100% { transform: scale(1); }
+      50%      { transform: scale(1.28); }
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,179,204,0.5);
+      border-radius: 24px;
+      padding: 28px 36px;
+      box-shadow: 0 8px 40px var(--shadow);
+      width: 100%;
+      max-width: 700px;
+      animation: fadeUp 0.8s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-label {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.35rem;
+      color: var(--pink-deep);
+      text-align: center;
+      margin-bottom: 18px;
+    }
+
+    /* ── Heartbeat Counter ── */
+    .counter-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    .counter-unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .counter-num {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      color: var(--pink-accent);
+      background: linear-gradient(135deg, var(--pink-light), var(--white));
+      border: 1.5px solid var(--pink-mid);
+      border-radius: 14px;
+      width: 100%;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(212,84,122,0.1);
+    }
+    .counter-num.tick {
+      animation: tick 0.18s ease;
+    }
+    @keyframes tick {
+      0%   { transform: scale(1); }
+      50%  { transform: scale(1.07); color: var(--text-dark); }
+      100% { transform: scale(1); }
+    }
+    .counter-lbl {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-mid);
+      font-weight: 400;
+    }
+
+    /* ── Music Player ── */
+    .music-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+    }
+    .music-btn {
+      background: linear-gradient(135deg, var(--pink-mid), var(--pink-accent));
+      border: none;
+      border-radius: 50%;
+      width: 52px; height: 52px;
+      font-size: 1.4rem;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(212,84,122,0.3);
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      color: white;
+    }
+    .music-btn:hover { transform: scale(1.1); box-shadow: 0 6px 22px rgba(212,84,122,0.42); }
+    .music-info {
+      font-size: 0.9rem;
+      color: var(--text-mid);
+    }
+    .music-info strong {
+      display: block;
+      color: var(--text-dark);
+      font-size: 1rem;
+    }
+    .eq-bars {
+      display: flex; gap: 3px; align-items: flex-end; height: 22px;
+    }
+    .eq-bar {
+      width: 4px;
+      background: var(--pink-accent);
+      border-radius: 2px;
+      animation: eqBounce 0.6s ease-in-out infinite alternate;
+    }
+    .eq-bar:nth-child(1) { height: 10px; animation-delay: 0s; }
+    .eq-bar:nth-child(2) { height: 18px; animation-delay: 0.15s; }
+    .eq-bar:nth-child(3) { height: 14px; animation-delay: 0.3s; }
+    .eq-bar:nth-child(4) { height: 20px; animation-delay: 0.1s; }
+    .eq-bar:nth-child(5) { height: 8px;  animation-delay: 0.25s; }
+    @keyframes eqBounce {
+      from { transform: scaleY(0.4); }
+      to   { transform: scaleY(1); }
+    }
+    .eq-bars.paused .eq-bar { animation-play-state: paused; }
+
+    /* ── Comedy Button ── */
+    .comedy-btn {
+      display: block;
+      margin: 0 auto;
+      background: linear-gradient(135deg, #ffb3cc, #ffd6e7);
+      border: 1.5px solid var(--pink-mid);
+      border-radius: 50px;
+      padding: 14px 36px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      color: var(--text-dark);
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 18px var(--shadow);
+      font-weight: 600;
+    }
+    .comedy-btn:hover { transform: scale(1.05); box-shadow: 0 6px 26px rgba(212,84,122,0.28); }
+
+    /* ── Modal ── */
+    .modal-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(90,45,66,0.45);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--white);
+      border-radius: 24px;
+      padding: 32px 28px;
+      max-width: 380px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 16px 60px rgba(212,84,122,0.3);
+      animation: modalPop 0.35s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+    @keyframes modalPop {
+      from { transform: scale(0.7); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
+    }
+    .modal-error {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.75rem;
+      color: var(--pink-accent);
+      background: #fff0f5;
+      border: 1px dashed var(--pink-mid);
+      border-radius: 8px;
+      padding: 8px 12px;
+      margin-bottom: 14px;
+      text-align: left;
+      letter-spacing: 0.04em;
+    }
+    .modal-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.6rem;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+    }
+    .modal-msg {
+      font-size: 0.88rem;
+      color: var(--text-mid);
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+    .modal-gif {
+      width: 100%; max-width: 280px;
+      border-radius: 16px;
+      margin-bottom: 16px;
+    }
+    .modal-close {
+      background: linear-gradient(135deg, var(--pink-mid), var(--pink-accent));
+      border: none;
+      border-radius: 50px;
+      padding: 10px 30px;
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.18s;
+    }
+    .modal-close:hover { transform: scale(1.06); }
+
+    /* ── Yes / No Buttons ── */
+    .question-section { text-align: center; }
+    .question-text {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      color: var(--text-dark);
+      margin-bottom: 24px;
+    }
+    .btn-row {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      position: relative;
+      min-height: 80px;
+    }
+    .btn-yes {
+      background: linear-gradient(135deg, var(--pink-deep), var(--pink-accent));
+      border: none;
+      border-radius: 50px;
+      padding: 15px 44px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 6px 24px rgba(212,84,122,0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      z-index: 2;
+    }
+    .btn-yes:hover { transform: scale(1.08); box-shadow: 0 10px 32px rgba(212,84,122,0.45); }
+    .btn-no {
+      background: rgba(255,255,255,0.6);
+      border: 1.5px solid var(--pink-mid);
+      border-radius: 50px;
+      padding: 14px 36px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1rem;
+      color: var(--text-mid);
+      cursor: pointer;
+      transition: background 0.2s;
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 480px) {
+      .card { padding: 22px 18px; }
+      .counter-grid { gap: 8px; }
+      .counter-num { font-size: 1.6rem; border-radius: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Floating Hearts -->
+<div class="hearts-bg" id="heartsBg"></div>
+
+<!-- Error Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-error">⚠ SYSTEM ERROR — Code: 0x1LUVU — Severity: CRITICAL</div>
+    <div class="modal-title">System Overloading! 🚨</div>
+    <div class="modal-msg">
+      <strong>Error: Too much cuteness detected!</strong><br/>
+      Initiating emergency <em>cat protocol</em>…<br/>
+      Please stand by while we reboot your heart. 🐾
+    </div>
+    <img class="modal-gif"
+      src="https://media.tenor.com/z6Eg-Uq4mMUAAAAC/cat-love.gif"
+      alt="Funny romantic cat meme"
+      onerror="this.src='https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif'"/>
+    <br/>
+    <button class="modal-close" onclick="closeModal()">Reboot with Love 💖</button>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-subtitle">a little something made just for</div>
+    <div class="hero-title"><span>Norah</span> <span class="hero-pulse">💕</span></div>
+  </div>
+
+  <!-- Counter -->
+  <div class="card" style="animation-delay:0.1s">
+    <div class="card-label">We've known each other for…</div>
+    <div class="counter-grid">
+      <div class="counter-unit">
+        <div class="counter-num" id="cnt-days">000</div>
+        <div class="counter-lbl">Days</div>
+      </div>
+      <div class="counter-unit">
+        <div class="counter-num" id="cnt-hours">00</div>
+        <div class="counter-lbl">Hours</div>
+      </div>
+      <div class="counter-unit">
+        <div class="counter-num" id="cnt-mins">00</div>
+        <div class="counter-lbl">Minutes</div>
+      </div>
+      <div class="counter-unit">
+        <div class="counter-num" id="cnt-secs">00</div>
+        <div class="counter-lbl">Seconds</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Music Player -->
+  <div class="card" style="animation-delay:0.2s">
+    <div class="card-label">🎵 Our Soft Melody</div>
+    <div class="music-row">
+      <button class="music-btn" id="musicBtn" onclick="toggleMusic()" title="Play / Mute">▶</button>
+      <div class="music-info">
+        <strong>Romantic Serenade</strong>
+        Soft &amp; Dreamy — just for you
+      </div>
+      <div class="eq-bars paused" id="eqBars">
+        <div class="eq-bar"></div><div class="eq-bar"></div>
+        <div class="eq-bar"></div><div class="eq-bar"></div>
+        <div class="eq-bar"></div>
+      </div>
+    </div>
+    <!-- Royalty-free melody from Pixabay -->
+    <audio id="bgAudio" loop>
+<source src="PIN.mp3" type="audio/mpeg"/>
+    </audio>
+  </div>
+
+  <!-- Comedy Cuteness Button -->
+  <div class="card" style="animation-delay:0.3s">
+    <div class="card-label">⚠️ Warning: Do Not Press</div>
+    <button class="comedy-btn" onclick="openModal()">🐱 Overload Cuteness Detector</button>
+  </div>
+
+  <!-- Yes / No -->
+  <div class="card" style="animation-delay:0.4s">
+    <div class="question-section">
+      <div class="question-text" id="questionText">Will you make my day even brighter? 🌸</div>
+      <div class="btn-row" id="btnRow">
+        <button class="btn-yes" onclick="yesClicked()">Yes! 💖</button>
+        <button class="btn-no" id="noBtn"
+          onmouseover="runAway(event)"
+          ontouchstart="runAway(event)">No… 🙈</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  /* ── Floating Hearts ── */
+  const heartsContainer = document.getElementById('heartsBg');
+  const emojis = ['💕','💖','💗','💓','🌸','✨','💝','💞'];
+  function spawnHeart() {
+    const el = document.createElement('div');
+    el.className = 'heart-float';
+    el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    el.style.left = Math.random() * 100 + 'vw';
+    const dur = 7 + Math.random() * 8;
+    el.style.animationDuration = dur + 's';
+    el.style.animationDelay = '0s';
+    el.style.fontSize = (1 + Math.random() * 1.2) + 'rem';
+    heartsContainer.appendChild(el);
+    setTimeout(() => el.remove(), (dur + 1) * 1000);
+  }
+  setInterval(spawnHeart, 600);
+  for (let i = 0; i < 12; i++) setTimeout(spawnHeart, i * 180);
+
+  /* ── Counter ── */
+  const START = new Date('2025-12-07T19:14:00');
+  const daysEl  = document.getElementById('cnt-days');
+  const hoursEl = document.getElementById('cnt-hours');
+  const minsEl  = document.getElementById('cnt-mins');
+  const secsEl  = document.getElementById('cnt-secs');
+
+  function fmt(n, len) { return String(n).padStart(len, '0'); }
+  function setVal(el, val) {
+    if (el.textContent !== val) {
+      el.textContent = val;
+      el.classList.remove('tick');
+      void el.offsetWidth; // reflow
+      el.classList.add('tick');
+    }
+  }
+  function updateCounter() {
+    const diff = Math.max(0, Math.floor((new Date() - START) / 1000));
+    setVal(daysEl,  fmt(Math.floor(diff / 86400), 3));
+    setVal(hoursEl, fmt(Math.floor((diff % 86400) / 3600), 2));
+    setVal(minsEl,  fmt(Math.floor((diff % 3600) / 60), 2));
+    setVal(secsEl,  fmt(diff % 60, 2));
+  }
+  updateCounter();
+  setInterval(updateCounter, 1000);
+
+  /* ── Music ── */
+  const audio    = document.getElementById('bgAudio');
+  const musicBtn = document.getElementById('musicBtn');
+  const eqBars   = document.getElementById('eqBars');
+  let playing = false;
+  function toggleMusic() {
+    if (!playing) {
+      audio.play().catch(() => {});
+      musicBtn.textContent = '⏸';
+      eqBars.classList.remove('paused');
+      playing = true;
+    } else {
+      audio.pause();
+      musicBtn.textContent = '▶';
+      eqBars.classList.add('paused');
+      playing = false;
+    }
+  }
+
+  /* ── Comedy Modal ── */
+  function openModal()  { document.getElementById('modalOverlay').classList.add('open'); }
+  function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
+  document.getElementById('modalOverlay').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  /* ── No Button Evasion ── */
+  const noBtn  = document.getElementById('noBtn');
+  const btnRow = document.getElementById('btnRow');
+  let escapes = 0;
+  function runAway(e) {
+    escapes++;
+    const pw = btnRow.offsetWidth;
+    const ph = btnRow.offsetHeight;
+    const bw = noBtn.offsetWidth;
+    const bh = noBtn.offsetHeight;
+    const maxX = Math.max(0, pw - bw);
+    const maxY = Math.max(0, ph - bh);
+    noBtn.style.position = 'absolute';
+    noBtn.style.left = (Math.random() * maxX) + 'px';
+    noBtn.style.top  = (Math.random() * maxY) + 'px';
+    noBtn.style.transform = 'none';
+    if (escapes > 5)  noBtn.textContent = 'Still No! 😹';
+    if (escapes > 10) { noBtn.style.opacity = '0.25'; noBtn.textContent = 'nope 🏃'; }
+    if (escapes > 14) noBtn.style.display = 'none';
+  }
+
+  /* ── Yes → Confetti ── */
+  function yesClicked() {
+    const opts = {
+      colors: ['#ff85a1','#ffb3cc','#ffd6e7','#e8799a','#ffffff','#d4547a'],
+      shapes: ['circle','square'],
+    };
+    confetti({ ...opts, particleCount: 160, spread: 80, origin: { y: 0.6 } });
+    setTimeout(() => confetti({ ...opts, particleCount: 80, angle: 60,  spread: 55, origin: { x: 0, y: 0.7 } }), 300);
+    setTimeout(() => confetti({ ...opts, particleCount: 80, angle: 120, spread: 55, origin: { x: 1, y: 0.7 } }), 600);
+    const yesBtn = document.querySelector('.btn-yes');
+    yesBtn.textContent = 'Yay! 🎉💖';
+    yesBtn.style.transform = 'scale(1.15)';
+    document.getElementById('questionText').textContent = 'I knew it! You\'re the best, Norah 🥰';
+  }
+</script>
+</body>
+</html>
